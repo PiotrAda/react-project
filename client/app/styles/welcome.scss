@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css?family=Gloria+Hallelujah");
+
+#welcome {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+  font-family: 'Gloria Hallelujah', cursive;
+  h1 {
+    padding: 10px;
+    background: #ffc966;
+    border-radius: 20px;
+    font-size: 40px;
+  }
+  h2 {
+    padding: 10px;
+    font-size: 25px;
+  }
+}

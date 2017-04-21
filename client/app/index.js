@@ -1,8 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var App = require('./components/Gallery');
+var Welcome = require('./components/Welcome');
+var Gallery = require('./components/Gallery');
 
 ReactDOM.render(
-  <App />,
+  <div>
+    <Welcome />
+    <Gallery />
+  </div>,
   document.getElementById('app')
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+var Favourite = require('./Favourite');
 
 import dog1 from '../assets/dog1.jpg';
 import dog2 from '../assets/dog2.jpg';
@@ -24,7 +25,8 @@ class Gallery extends React.Component {
         {id:7, name: 'Philosopher dog', source:dog7, intelligence: 2, strength: 10},
         {id:8, name: 'Japan dog', source:dog8, intelligence: 6, strength: 3},
         {id:9, name: 'Emperor dog', source:dog9, intelligence: 5, strength: 4}
-      ]
+      ],
+			favourites: []
     }
   }
 
@@ -36,6 +38,26 @@ class Gallery extends React.Component {
       // changes state to new state with less objects;
       this.setState({data: newState})
   }
+
+	setFavourite(item){
+		var newFavourite = this.state.favourites;
+		var error = 0;
+			// removes imagebox from this.state and creates new array with less objects;
+			if (this.state.favourites.length >= 1){
+				for (var i = 0 ; i < this.state.favourites.length ; i++) {
+					if (this.state.favourites[i].id === item.id){
+						error +=1;
+					}
+				}
+				if (error === 0){
+					newFavourite.push(item);
+					this.setState({favourites: newFavourite})
+				}
+			} else{
+				newFavourite.push(item);
+				this.setState({favourites: newFavourite})
+			}
+	}
 
   sortValue(x){
     var sortedObjectArray = this.state.dogs;
@@ -70,21 +92,30 @@ class Gallery extends React.Component {
   render(){
   	var newGallery = this.state.dogs.map((item)=>{
     	return <div className="imagebox" key={item.id}>
-      	<div className="id">Id: {item.id}</div><button className="delete" onClick={this.delete.bind(this, item)}>Delete</button><img src={item.source} /><h2>{item.name}</h2><p>Intelligence: {item.intelligence}</p><p>Strength: {item.strength}</p>
+      	<div className="id">Id: {item.id}</div><Favourite onClick={() => {this.setFavourite(item)}}/><button className="delete" onClick={this.delete.bind(this, item)}>Delete</button><img src={item.source} /><h2>{item.name}</h2><p>Intelligence: {item.intelligence}</p><p>Strength: {item.strength}</p>
       </div>
     })
+		var setFavourites = this.state.favourites.map((data)=>{
+			return <div className="favourites" key={data.id*100}>
+				<img src={data.source} /><h2>{data.name}</h2>
+			</div>
+		})
   	return <div id="content">
+		<div>
+			<h2>Pick your favourites!</h2>
+			{setFavourites}
+		</div>
     <div id="button-container">
 		<button className="sort" onClick={this.sortValue.bind(this, 'id')}>Sort by id</button>
 		<button className="sort" onClick={this.sortValue.bind(this, 'name')}>Sort by name</button>
 		<button className="sort" onClick={this.sortValue.bind(this, 'intelligence')}>Sort by intelligence</button>
 		<button className="sort" onClick={this.sortValue.bind(this, 'strength')}>Sort by strength</button>
 		</div>
-    	{newGallery}
+			{newGallery}
     </div>
   }
 }
 
 module.exports = Gallery;
 
-require('../styles/style.scss');
+require('../styles/gallery.scss');
